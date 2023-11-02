@@ -28,6 +28,18 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
     - name: Run Tests
+      env:
+        SECRET_KEY: ${{ secrets.SECRET_KEY }}
+        DB_NAME: ${{ secrets.DB_NAME }}
+        DB_ENGINE: ${{ secrets.DB_ENGINE }}
+        DB_PORT: ${{ secrets.DB_PORT }}
+        DB_HOST: ${{ secrets.DB_HOST }}
+        DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+        DB_USER: ${{ secrets.DB_USER }}
+        EMAIL_BACKEND: ${{ secrets.EMAIL_BACKEND}}
+        EMAIL_HOST: ${{ secrets.EMAIL_HOST }}
+        EMAIL_HOST_USER: ${{ secrets.EMAIL_HOST_USER }}
+        EMAIL_HOST_PASSWORD: ${{ secrets.EMAIL_HOST_PASSWORD }}
       run: |
         export DISPLAY=:99
         chromedriver --url-base=/wd/hub &
