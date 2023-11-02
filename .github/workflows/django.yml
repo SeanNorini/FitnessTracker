@@ -46,5 +46,25 @@ jobs:
         sudo Xvfb -ac :99 -screen 0 1280x1024x24 > /dev/null 2>&1 & # optional
         cd fitness_tracker
         python manage.py test tests
+        
+    - name: Create Pull Request
+      id: create_pr
+      uses: actions/github-script@0.9.0
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        script: |
+          const title = "Auto-Merge Development to Main";
+          const head = "dev";
+          const base = "main";
+          const body = "Automatically merging development into main after passing tests.";
+          const pr = await github.pulls.create({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            title,
+            head,
+            base,
+            body,
+          });
+          console.log(`Pull Request created: ${pr.data.html_url}`);
 
 
