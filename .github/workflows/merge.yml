@@ -27,7 +27,8 @@
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
         script: |
-          const prNumber=process.env.PR_NUMBER
+          env: PR_NUMBER
+          const prNumber=PR_NUMBER
           await github.pulls.merge({
             owner: context.repo.owner,
             repo: context.repo.repo,
