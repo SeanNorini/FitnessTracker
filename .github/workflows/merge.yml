@@ -5,7 +5,7 @@
      types: [completed] #requested
 
  jobs:
-   create_pull_request:
+   merge_pull_request:
     runs-on: ubuntu-latest
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     environment: test
@@ -17,9 +17,9 @@
     - name: Merge Pull Request
       uses: actions/github-script@0.9.0
       with:
-        token: ${{ secrets.GITHUB_TOKEN }}
+        github-token: ${{ secrets.GITHUB_TOKEN }}
         script: |
-          const prNumber = $(curl -s -H "Authorization: token $token" \
+          const prNumber = $(curl -s -H "Authorization: token $github-token" \
             "https://api.github.com/repos/$owner/$repo/pulls?state=open" | jq ".[] | select(.head.ref == \"$branch\").number")
           await github.pulls.merge({
             owner: context.repo.owner,
