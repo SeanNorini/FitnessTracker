@@ -15,7 +15,8 @@ jobs:
       max-parallel: 4
       matrix:
         python-version: [3.11]
-
+        
+    environment: test
     steps:
     - uses: actions/checkout@v2
     - uses: nanasess/setup-chromedriver@v2
