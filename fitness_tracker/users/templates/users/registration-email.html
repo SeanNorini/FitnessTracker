@@ -1,0 +1,21 @@
+{% extends "users/form-wrapper.html" %}
+{% load static %}
+
+{% block form %} 
+  <div class="login-form">
+    <h1 id="login-header">Thank you for registering!</h1>
+      <div class="form-layout username-registration">   
+        {{ username }}
+      </div>
+      <hr>
+      <div class="row">
+        <div class="form-layout first-name">
+          {{ first_name }}
+        </div>
+        <div class="form-layout last-name">
+          {{ last_name }}
+        </div>
+      </div>
+      </div>
+  </div>
+{% endblock %}

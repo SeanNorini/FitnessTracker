@@ -1,6 +1,8 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
+from users.models import User, UserAttributes
+from django.core.exceptions import ObjectDoesNotExist
 import pytest
 import time
 
@@ -29,6 +31,19 @@ class UserTests(StaticLiveServerTestCase):
         self.selenium.find_element(By.NAME, "username").send_keys("Admin")
         self.selenium.find_element(By.NAME, "password").send_keys("Admin")
         self.selenium.find_element(By.NAME, "login").click()
+
+    def create_user(self):
+        self.selenium.get(f"{self.live_server_url}/users/registration")
+        self.selenium.find_element(By.NAME, "username").send_keys("test_name")
+        self.selenium.find_element(By.NAME, "first_name").send_keys("first_name")
+        self.selenium.find_element(By.NAME, "last_name").send_keys("last_name")
+        self.selenium.find_element(By.NAME, "password").send_keys("test_pass")
+        self.selenium.find_element(By.NAME, "confirm_password").send_keys("test_pass")
+        self.selenium.find_element(By.NAME, "email").send_keys("snorini@gmail.com")
+        self.selenium.find_element(By.NAME, "weight").send_keys("150")
+        self.selenium.find_element(By.NAME, "height").send_keys("75")
+        self.selenium.find_element(By.NAME, "age").send_keys("28")
+        self.selenium.find_element(By.NAME, "register").click()
         
 
     def test_login(self):
@@ -38,7 +53,6 @@ class UserTests(StaticLiveServerTestCase):
         Expected result: Admin is logged in.
         """
         self.admin_login()
-        time.sleep(15)
         greeting = self.selenium.find_element(By.ID, "greeting")
         assert greeting.text == "Welcome, Admin."
 
@@ -50,8 +64,8 @@ class UserTests(StaticLiveServerTestCase):
         """
         self.admin_login()
         self.selenium.find_element(By.ID, "logout").click()
-        greeting = self.selenium.find_element(By.ID, "greeting")
-        assert greeting.text == "Not signed in."
+        url = self.selenium.current_url
+        assert url == f"{self.live_server_url}/users/login"
 
     def test_redirect(self):
         """
@@ -61,3 +75,19 @@ class UserTests(StaticLiveServerTestCase):
         self.selenium.get(f"{self.live_server_url}")
         url = self.selenium.current_url
         assert url == f"{self.live_server_url}/users/login"
+
+    def test_registration(self):
+        """
+        Test verifies registration functionality by making sure a user is not in the database, then
+        using the registration form to create a user and confirm user is in database.
+        
+        """
+        # Confirm user does not exist
+        with pytest.raises(ObjectDoesNotExist):
+            User.objects.get(username="test_name")
+
+        # Create user
+        self.create_user()
+
+        # Confirm user created
+        assert User.objects.get(username="test_name")

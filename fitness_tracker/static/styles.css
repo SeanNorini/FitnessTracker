@@ -2,6 +2,37 @@
   box-sizing: border-box;
 }
 
+.col {
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+.numbers {
+  text-align: right;
+}
+
+.form-layout .row {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-grow: 1;
+  gap: 2rem;
+}
+
+input {
+  border-radius: .25rem;
+  height: 2rem;
+  
+  max-width: 100%;
+}
+
+.form-layout.email {
+  max-width: 80%;
+}
+
+#height, #weight, #age {
+  max-width: 4rem;
+}
+
 header {
   display: flex;
   flex-direction: row;
@@ -14,9 +45,6 @@ header {
 html {
   height: 100%;
   width: 100%;
-  background-color: #1a1a1a;
-  color: white;
-  font-size: 1.4rem;
 }
 
 body {
@@ -24,6 +52,8 @@ body {
   flex-direction: column;
   align-items: center;
   color: rgb(250, 250, 250);
+  background-color: #1a1a1a;
+  font-size: 1.4rem;
   height: 100%;
 }
 
@@ -44,17 +74,35 @@ body {
   padding: 1.5rem 2rem;
   border-radius: 1rem;
   box-shadow: 3px 3px 10px 3px  rgba(0, 0, 0, .5);
+  width: auto;
 }
 
 .form-layout {
   display: flex;
-  flex-direction: column;
-  gap: .1rem;
+  flex-direction: row;
+  flex-wrap: wrap;
+  max-width: 30rem;
+  width: 100%;
 }
+
 
 .form-layout div {
   display: flex;
   flex-direction: column;
+
+  
+  
+  max-width: 100%;
+}
+
+.form-submit {
+  align-self: center;
+  justify-self: center;
+}
+
+hr {
+  width: 100%;
+  visibility: hidden;
 }
 
 .module {
@@ -100,7 +148,6 @@ a {
   margin: 1rem 0;
   text-wrap: nowrap;
 
-
 }
 
 #register-link a {
@@ -144,6 +191,23 @@ a {
 h1 {
   text-align: center;
   margin:0;
-  color: #6884ff;
+  color: #ffffff;
 }
 
+label {
+  font-size: 1.2rem;
+}
+
+.form-layout.username-registration {
+  max-width: 60%;
+}
+
+.form-submit {
+  width: 100%;
+}
+
+#register-button {
+  height: 2rem;
+  width: 60%;
+  align-self: center;
+}

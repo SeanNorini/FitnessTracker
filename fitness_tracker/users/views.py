@@ -2,8 +2,10 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse
-
-from .forms import LoginForm
+from .forms import LoginForm, RegistrationForm
+from .utils import read_registration, create_user, update_user_attrs, send_email_confirmation
+from django.core.exceptions import ValidationError
+from django.db import IntegrityError
 
 # Create your views here.
 def login_view(request):
@@ -37,5 +39,32 @@ def logout_view(request):
 
     return HttpResponseRedirect(reverse("index"))
 
-def register(request):
-    return render(request, "users/register.html")
+def registration(request):
+    # Check for form data
+    if request.method=="POST":    
+        try:
+            # Read data into contact info and physical attributes
+            form = RegistrationForm(request.POST)
+            user_contact, user_attrs = read_registration(form)
+        except ValidationError as error:
+            # If form isn't valid or password doesn't match, refresh registration page with error message.
+            render(request, "users/registration.html", {"form": RegistrationForm(), "message": error})
+
+        # Attempt to create a new user, update their info and log in to main page. 
+        try:
+            user = create_user(**user_contact)
+            update_user_attrs(username=user.username, **user_attrs)
+            send_email_confirmation(**user_contact)
+            login(request, user)
+            return HttpResponseRedirect(reverse("index"))
+        except IntegrityError:
+            render(request, "users/registration.html", {"form": RegistrationForm(), "message": "Username already taken."})
+
+    if request.user.is_authenticated:
+        return HttpResponseRedirect(reverse("index"))
+    else:
+        return render(request, "users/registration.html", {"form": RegistrationForm()})
+    
+          
+        
+    
