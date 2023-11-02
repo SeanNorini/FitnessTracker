@@ -15,12 +15,19 @@
     - name: Checkout code
       uses: actions/checkout@v2
       
+    - name: Extract Pull Request Number
+      id: extract_pr_number
+      run: |
+        PR_NUMBER=$(echo "$GITHUB_REF" | awk 'BEGIN { FS = "/" } ; { print $3 }')
+        echo "PR_NUMBER=$PR_NUMBER" >> $GITHUB_ENV
+      shell: bash
+      
     - name: Merge Pull Request
       uses: actions/github-script@0.9.0
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
         script: |
-          const prNumber=context.runNumber
+          const prNumber=process.env.PR_NUMBER
           await github.pulls.merge({
             owner: context.repo.owner,
             repo: context.repo.repo,
