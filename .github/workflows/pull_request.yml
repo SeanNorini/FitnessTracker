@@ -1,7 +1,7 @@
  name: Create Pull Request
  on:
    workflow_run:
-     workflows: ["Django CI"]
+     workflows: ["Django Tests"]
      types: [completed] #requested
 
  jobs:
