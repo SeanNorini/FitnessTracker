@@ -3,6 +3,7 @@
    workflow_run:
      workflows: ["Create Pull Request"]
      types: [completed] #requested
+   workflow_dispatch:
 
  jobs:
    merge_pull_request:
@@ -19,8 +20,7 @@
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
         script: |
-          const prNumber = $(curl -s -H "Authorization: token $github-token" \
-            "https://api.github.com/repos/$owner/$repo/pulls?state=open" | jq ".[] | select(.head.ref == \"$branch\").number")
+          const prNumber = context.payload.pull_request.number;
           await github.pulls.merge({
             owner: context.repo.owner,
             repo: context.repo.repo,
