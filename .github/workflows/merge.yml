@@ -1,4 +1,4 @@
- name: Create Pull Request
+ name: Merge Pull Request
  on:
    workflow_run:
      workflows: ["Create Pull Request"]
