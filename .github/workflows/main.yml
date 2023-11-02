@@ -17,8 +17,6 @@
         git config --global user.name 'SeanNorini'
         git config --global user.email 'snorini@gmail.com'
         git checkout -b dev
-        git commit -am "Add new feature"
-        git push -u origin dev
 
         hub pull-request -b main -h dev -m "Merge dev into main" -F- <<EOF
         This is an automated pull request created by GitHub Actions.
@@ -40,6 +38,5 @@
         git config --global user.email 'snorini@gmail.com'
         git fetch
         git pull origin main
-        git branch -D dev
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
