@@ -34,3 +34,5 @@
           });
 
           console.log(`Pull Request created: ${pr.data.html_url}`);
+          run: 
+           echo "PR_NUMBER = context.payload.pull_request.number" >> $GITHUB_ENV
