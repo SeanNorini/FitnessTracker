@@ -20,7 +20,7 @@
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
         script: |
-          const prNumber =$(echo $GITHUB_REF | awk 'BEGIN { FS = "/" } ; { print $3 }')
+          const prNumber=context.runNumber
           await github.pulls.merge({
             owner: context.repo.owner,
             repo: context.repo.repo,
