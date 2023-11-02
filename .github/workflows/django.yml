@@ -28,9 +28,22 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
     - name: Run Tests
+      env:
+        SECRET_KEY: ${{ secrets.SECRET_KEY }}
+        DB_NAME: ${{ secrets.DB_NAME }}
+        DB_ENGINE: ${{ secrets.DB_ENGINE }}
+        DB_PORT: 587
+        DB_HOST: ""
+        DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+        DB_USER: ""
+        EMAIL_BACKEND: ${{ secrets.EMAIL_BACKEND}}
+        EMAIL_HOST: ${{ secrets.EMAIL_HOST }}
+        EMAIL_HOST_USER: ${{ secrets.EMAIL_HOST_USER }}
       run: |
         export DISPLAY=:99
         chromedriver --url-base=/wd/hub &
         sudo Xvfb -ac :99 -screen 0 1280x1024x24 > /dev/null 2>&1 & # optional
         cd fitness_tracker
         python manage.py test tests
+
+
