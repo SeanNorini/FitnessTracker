@@ -32,10 +32,10 @@ jobs:
         SECRET_KEY: ${{ secrets.SECRET_KEY }}
         DB_NAME: ${{ secrets.DB_NAME }}
         DB_ENGINE: ${{ secrets.DB_ENGINE }}
-        DB_PORT: 587
-        DB_HOST: ""
+        DB_PORT: ${{ secrets.DB_PORT }}
+        DB_HOST: ${{ secrets.DB_HOST }}
         DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-        DB_USER: ""
+        DB_USER: ${{ secrets.DB_USER }}
         EMAIL_BACKEND: ${{ secrets.EMAIL_BACKEND}}
         EMAIL_HOST: ${{ secrets.EMAIL_HOST }}
         EMAIL_HOST_USER: ${{ secrets.EMAIL_HOST_USER }}
