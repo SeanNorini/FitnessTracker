@@ -4,9 +4,6 @@ on:
   pull_request:
     branches:
       - development
-    types:
-      - opened
-      - synchronize
 
 jobs:
   merge_branch:
