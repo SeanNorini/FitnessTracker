@@ -32,5 +32,5 @@ jobs:
            body,
          });
 
-         console.log(context.payload)
+         console.log(context.payload.pull_request)
    
