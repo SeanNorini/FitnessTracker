@@ -3,7 +3,7 @@
    workflow_run:
      workflows: ["Django Tests"]
      types: [completed] #requested
-
+   workflow_dispatch:
  jobs:
    create_pull_request:
     runs-on: ubuntu-latest
@@ -36,7 +36,7 @@
     - name: Extract Pull Request Number
       id: extract_pr_number
       run: |
-        echo ${{ github.event.number }}
+        echo ${{ github.event.pull_request.number }}
       shell: bash
      
           
