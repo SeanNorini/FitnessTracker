@@ -35,14 +35,14 @@ jobs:
          console.log(response.data.number)
          });
 
-         await github.rest.pulls.createReview({
+         await github.pulls.createReview({
               event: "APPROVE",
               owner: repository.owner,
               repo: repository.repo,
               pull_number: response.data.number,
             })
 
-         await github.rest.pulls.merge({
+         await github.pulls.merge({
               merge_method: "merge",
               owner: repository.owner,
               pull_number: response.data.number,
