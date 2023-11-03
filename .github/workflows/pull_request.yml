@@ -12,6 +12,8 @@ jobs:
    - name: Checkout code
      uses: actions/checkout@v2
 
+   - name: Install Dependencies
+     run: npm install @actions/core
 
    - name: Create Pull Request
      uses: actions/github-script@0.9.0
@@ -33,7 +35,6 @@ jobs:
          })
          .then(response => {
          const PR_NUMBER = response.data.number
-         console.log(PR_NUMBER)
          core.exportVariable("PR_NUMBER", PR_NUMBER)
          });
 
