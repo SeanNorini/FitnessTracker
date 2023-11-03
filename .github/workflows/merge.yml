@@ -5,6 +5,7 @@ on:
     workflows: ["Create Pull Request"]
     types: 
       - completed
+  workflow_dispatch:
 
 jobs:
   merge_branch:
