@@ -30,7 +30,7 @@ jobs:
            head,
            base,
            body,
-         });
+         })
          .then(response => {
          console.log(response.data.number)
-         })
+         });
