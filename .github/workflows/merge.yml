@@ -52,4 +52,3 @@ jobs:
             echo "Failed to merge the pull request."
             exit 1
           fi
-
