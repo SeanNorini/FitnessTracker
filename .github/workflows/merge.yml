@@ -1,7 +1,7 @@
  name: Merge Pull Request
  on:
    workflow_run:
-     workflows: ["Django Tests"]
+     workflows: ["Create Pull Request"]
      types: [completed] #requested
    workflow_dispatch:
 
