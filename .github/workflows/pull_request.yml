@@ -31,6 +31,6 @@ jobs:
            base,
            body,
          });
-
-         console.log(context.payload.pull_request)
-   
+         .then(response => {
+         console.log(response.data.number)
+         })
