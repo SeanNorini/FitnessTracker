@@ -28,22 +28,6 @@
             base,
             body,
           });
-          core.exportVariable('PR_NUMBER', github.event.number);
-          console.log(PR_NUMBER)
-      
-    - name: Merge Pull Request
-      uses: actions/github-script@0.9.0
-      with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
-        script: |
-          env: PR_NUMBER
-          const prNumber=PR_NUMBER
-          await github.pulls.merge({
-            owner: context.repo.owner,
-            repo: context.repo.repo,
-            pull_number: prNumber,
-          });
-          console.log(`Pull Request #${prNumber} merged.`);
      
           
            
