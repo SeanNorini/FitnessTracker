@@ -7,6 +7,7 @@ on:
   workflow_run:
      workflows: ["Create Pull Request"]
      types: [completed] #requested
+   workflow_dispatch:
 
 jobs:
   auto_approve_and_merge:
@@ -51,3 +52,4 @@ jobs:
             echo "Failed to merge the pull request."
             exit 1
           fi
+
