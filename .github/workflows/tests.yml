@@ -1,6 +1,5 @@
 name: Django Tests
 
-
 on:
   push:
     branches: [ "dev" ]
