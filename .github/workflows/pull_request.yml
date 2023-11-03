@@ -37,16 +37,4 @@ jobs:
          core.exportVariable("PR_NUMBER", PR_NUMBER)
          });
 
-         await github.pulls.createReview({
-              event: "APPROVE",
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              pull_number: PR_NUMBER,
-            })
-
-         await github.pulls.merge({
-              merge_method: "merge",
-              owner: context.repo.owner,
-              pull_number: PR_NUMBER,
-              repo: context.repo.repo,
-            })
+         console.log(PR_NUMBER)
