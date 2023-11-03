@@ -1,31 +1,22 @@
  name: Merge Pull Request
  on:
-   workflow_run:
-     workflows: ["Create Pull Request"]
-     types: [completed] #requested
-   workflow_dispatch:
+   pull_request:
+     types:
+       - opened
 
  jobs:
    merge_pull_request:
     runs-on: ubuntu-latest
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
-    environment: test
     steps:
   
     - name: Checkout code
       uses: actions/checkout@v2
       
-    - name: Extract Pull Request Number
-      id: extract_pr_number
-      run: |
-        PR_NUMBER=$(echo "$GITHUB_REF" | awk 'BEGIN { FS = "/" } ; { print $3 }')
-        echo "PR_NUMBER=$PR_NUMBER" >> $GITHUB_ENV
-      shell: bash
-      
     - name: Merge Pull Request
       uses: actions/github-script@0.9.0
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
+        PR_NUMBER: ${{ github.event.pull_request.number }}
         script: |
           env: PR_NUMBER
           const prNumber=PR_NUMBER
