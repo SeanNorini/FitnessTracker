@@ -31,8 +31,10 @@
           
     - name: Extract Pull Request Number
       id: extract_pr_number
+      env: 
+        PR_NUMBER: ${{ github.event.pull_request.number }}
       run: |
-        echo ${{ github.event.pull_request.number }}
+        echo $PR_NUMBER
       shell: bash
      
           
