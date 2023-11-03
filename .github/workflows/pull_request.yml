@@ -39,5 +39,3 @@
         echo ${{ github.event.number }}
       shell: bash
      
-          
-           
