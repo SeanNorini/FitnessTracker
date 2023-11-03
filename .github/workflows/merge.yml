@@ -1,0 +1,32 @@
+name: Merge Branch
+
+on:
+  workflow_run:
+    workflows: ["Create Pull Request"]
+    types: 
+      - completed
+
+jobs:
+  merge_branch:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Merge Branch
+        run: |
+          # Replace 'main' with the target branch you want to merge into
+          target_branch="main"
+          
+          # Merge the source branch into the target branch
+          git checkout $target_branch
+          git merge --no-ff ${{ github.event.workflow_run.head_branch }}
+          git push
+
+          # Check for conflicts
+          if git log --merges -n 1 --oneline | grep -q "Merge branch"; then
+            echo "Conflicts detected. Manual intervention required."
+          else
+            echo "Branch merged successfully."
+          fi
