@@ -32,7 +32,18 @@
             base,
             body,
           });
-            core.setOutput('pr_number', pr.data.number);
-            console.log(`Pull Request created: ${pr.data.html_url}`);
             
+            // Capture the pull request number
+            const prNumber = pr.data.number;
 
+            // Output the pull request number to the workflow logs
+            console.log(`Pull Request created: ${pr.data.html_url}`);
+            console.log(`Pull Request Number: ${prNumber}`);
+
+            // Set the pull request number as an environment variable
+            core.setOutput('pr_number', prNumber);
+
+    - name: Save Pull Request Number
+      run: |
+       echo "PR_NUMBER=${{ steps.create_pr.outputs.pr_number }}" >> $GITHUB_ENV
+           
