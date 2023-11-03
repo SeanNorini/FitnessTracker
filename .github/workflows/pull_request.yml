@@ -37,14 +37,14 @@ jobs:
 
          await github.pulls.createReview({
               event: "APPROVE",
-              owner: repository.owner,
-              repo: repository.repo,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
               pull_number: response.data.number,
             })
 
          await github.pulls.merge({
               merge_method: "merge",
-              owner: repository.owner,
+              owner: context.repo.owner,
               pull_number: response.data.number,
-              repo: repository.repo,
+              repo: context.repo.repo,
             })
