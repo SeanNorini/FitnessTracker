@@ -31,4 +31,7 @@ jobs:
            base,
            body,
          });
+
+   - name: get PrNumber
+     run: echo ${{ github.event.pull_request.head.ref }}
            
