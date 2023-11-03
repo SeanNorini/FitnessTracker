@@ -1,12 +1,6 @@
 name: Auto-Approve and Merge
 
 on:
-  pull_request:
-    types:
-      - opened
-  workflow_run:
-     workflows: ["Create Pull Request"]
-     types: [completed] #requested
   workflow_dispatch:
 
 jobs:
