@@ -28,7 +28,7 @@
             base,
             body,
           });
-          core.exportVariable('PR_NUMBER', github.event.pull_request.number);
+          core.exportVariable('PR_NUMBER', github.event.number);
           console.log(PR_NUMBER)
       
     - name: Merge Pull Request
