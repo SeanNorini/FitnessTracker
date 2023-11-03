@@ -32,8 +32,12 @@
             base,
             body,
           });
-
-
-    - name: Save Pull Request Number
-      run: echo "PR_NUMBER=${{ github.event.number }}" >> $GITHUB_ENV
+          
+    - name: Extract Pull Request Number
+      id: extract_pr_number
+      run: |
+        echo ${{ github.event.number }}
+      shell: bash
+     
+          
            
