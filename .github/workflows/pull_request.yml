@@ -31,11 +31,24 @@
           
     - name: Extract Pull Request Number
       id: extract_pr_number
-      env: 
-        PR_NUMBER: ${{ github.event.pull_request.number }}
       run: |
-        echo "$PR_NUMBER"
+        PR_NUMBER=$(echo "$GITHUB_REF" | awk 'BEGIN { FS = "/" } ; { print $3 }')
+        echo "PR_NUMBER=$PR_NUMBER" >> $GITHUB_ENV
       shell: bash
+      
+    - name: Merge Pull Request
+      uses: actions/github-script@0.9.0
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        script: |
+          env: PR_NUMBER
+          const prNumber=PR_NUMBER
+          await github.pulls.merge({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            pull_number: prNumber,
+          });
+          console.log(`Pull Request #${prNumber} merged.`);
      
           
            
