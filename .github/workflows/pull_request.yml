@@ -15,6 +15,7 @@
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
         script: |
+          const core = require('@actions/core');
           const title = "Create Pull Request";
           const head = "dev";
           const base = "main";
@@ -28,13 +29,8 @@
             base,
             body,
           });
-          
-    - name: Extract Pull Request Number
-      id: extract_pr_number
-      run: |
-        PR_NUMBER=$(echo "$GITHUB_REF" | awk 'BEGIN { FS = "/" } ; { print $3 }')
-        echo "PR_NUMBER=$PR_NUMBER" >> $GITHUB_ENV
-      shell: bash
+          core.exportVariable('PR_NUMBER', github.event.pull_request.number);
+          console.log(PR_NUMBER)
       
     - name: Merge Pull Request
       uses: actions/github-script@0.9.0
