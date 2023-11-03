@@ -1,5 +1,4 @@
-name: Django CI
-
+name: Django Tests
 
 on:
   push:
@@ -15,7 +14,8 @@ jobs:
       max-parallel: 4
       matrix:
         python-version: [3.11]
-
+        
+    environment: test
     steps:
     - uses: actions/checkout@v2
     - uses: nanasess/setup-chromedriver@v2
@@ -28,9 +28,21 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
     - name: Run Tests
+      env:
+        SECRET_KEY: ${{ secrets.SECRET_KEY }}
+        DB_NAME: ${{ secrets.DB_NAME }}
+        DB_ENGINE: ${{ secrets.DB_ENGINE }}
+        DB_PORT: ${{ secrets.DB_PORT }}
+        DB_HOST: ${{ secrets.DB_HOST }}
+        DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+        DB_USER: ${{ secrets.DB_USER }}
+        EMAIL_BACKEND: ${{ secrets.EMAIL_BACKEND}}
+        EMAIL_HOST: ${{ secrets.EMAIL_HOST }}
+        EMAIL_HOST_USER: ${{ secrets.EMAIL_HOST_USER }}
+        EMAIL_HOST_PASSWORD: ${{ secrets.EMAIL_HOST_PASSWORD }}
       run: |
         export DISPLAY=:99
         chromedriver --url-base=/wd/hub &
         sudo Xvfb -ac :99 -screen 0 1280x1024x24 > /dev/null 2>&1 & # optional
-        cd ecommerce
+        cd fitness_tracker
         python manage.py test tests
