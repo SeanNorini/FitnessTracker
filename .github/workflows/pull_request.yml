@@ -33,6 +33,8 @@ jobs:
          })
          .then(response => {
          const PR_NUMBER = response.data.number
+         console.log(PR_NUMBER)
+         core.exportVariable("PR_NUMBER", PR_NUMBER)
          });
 
          await github.pulls.createReview({
