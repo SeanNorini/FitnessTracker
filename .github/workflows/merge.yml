@@ -4,6 +4,9 @@ on:
   pull_request:
     types:
       - opened
+  workflow_run:
+     workflows: ["Create Pull Request"]
+     types: [completed] #requested
 
 jobs:
   auto_approve_and_merge:
