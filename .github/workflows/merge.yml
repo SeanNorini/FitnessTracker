@@ -18,7 +18,7 @@ jobs:
       - name: Merge Branch
         run: |
           # Replace 'main' with the target branch you want to merge into
-          target_branch="dev"
+          target_branch="main"
           
           # Merge the source branch into the target branch
           git checkout $target_branch
