@@ -2,8 +2,6 @@ name: Merge Branch
 
 on:
   pull_request:
-    branches:
-      - development
 
 jobs:
   merge_branch:
