@@ -1,11 +1,12 @@
 name: Merge Branch
 
 on:
-  workflow_run:
-    workflows: ["Create Pull Request"]
-    types: 
-      - completed
-  workflow_dispatch:
+  pull_request:
+    branches:
+      - development
+    types:
+      - opened
+      - synchronize
 
 jobs:
   merge_branch:
@@ -17,15 +18,17 @@ jobs:
 
       - name: Merge Branch
         run: |
-          # Replace 'main' with the target branch you want to merge into
-          target_branch="dev"
-          
-          # Merge the source branch into the target branch
-          git checkout $target_branch
-          git merge --no-ff ${{ github.event.workflow_run.head_branch }}
-          git push
+          target_branch="main"
 
-          # Check for conflicts
+          if [ "${{ github.event.pull_request.base.ref }}" == "$target_branch" ]; then
+            echo "Skipping merge as it's a pull request to the 'main' branch."
+            exit 0
+          fi
+
+          git checkout -B $target_branch
+          git merge --no-ff ${{ github.event.pull_request.head.ref }}
+          git push origin $target_branch
+
           if git log --merges -n 1 --oneline | grep -q "Merge branch"; then
             echo "Conflicts detected. Manual intervention required."
           else
