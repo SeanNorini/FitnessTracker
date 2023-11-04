@@ -12,18 +12,15 @@ jobs:
    - name: Checkout code
      uses: actions/checkout@v2
 
-   - name: Install Dependencies
-     run: npm install @actions/core
-
    - name: Create Pull Request
      uses: actions/github-script@0.9.0
      with:
        github-token: ${{ secrets.GITHUB_TOKEN }}
        script: |
-         const title = "Create Pull Request";
+         const title = "Create Pull Request and merge.";
          const head = "dev";
          const base = "main";
-         const body = "Description of your pull request.";
+         const body = "Auto merge after passing tests.";
 
          const pr = await github.pulls.create({
            owner: context.repo.owner,
@@ -33,18 +30,11 @@ jobs:
            base,
            body,
          })
-         .then(response => {
-         await github.pulls.createReview({
-              event: "APPROVE",
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              pull_number: response.data.number,
-            })
 
          await github.pulls.merge({
               merge_method: "merge",
               owner: context.repo.owner,
-              pull_number: response.data.number,
+              pull_number: pr.data.number,
               repo: context.repo.repo,
             })
          });
