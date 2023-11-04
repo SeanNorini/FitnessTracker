@@ -3,25 +3,25 @@ on:
   workflow_run:
    workflows: ["Django Tests"]
    types: [completed] #requested
+  workflow_dispatch:
 jobs:
   create_pull_request:
    runs-on: ubuntu-latest
    if: ${{ github.event.workflow_run.conclusion == 'success' }}
-
+   
    steps:
    - name: Checkout code
      uses: actions/checkout@v2
-
 
    - name: Create Pull Request
      uses: actions/github-script@0.9.0
      with:
        github-token: ${{ secrets.GITHUB_TOKEN }}
        script: |
-         const title = "Create Pull Request";
+         const title = "Create Pull Request and merge.";
          const head = "dev";
          const base = "main";
-         const body = "Description of your pull request.";
+         const body = "Auto merge after passing tests.";
 
          const pr = await github.pulls.create({
            owner: context.repo.owner,
@@ -30,8 +30,14 @@ jobs:
            head,
            base,
            body,
+         })
+
+         await github.pulls.merge({
+              merge_method: "merge",
+              owner: context.repo.owner,
+              pull_number: pr.data.number,
+              repo: context.repo.repo,
+            })
          });
 
-   - name: get PrNumber
-     run: echo ${{ github.event.pull_request.head.ref }}
-           
+        
