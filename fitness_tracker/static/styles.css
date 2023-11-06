@@ -1,5 +1,6 @@
 * {
   box-sizing: border-box;
+  color: rgb(250, 250, 250);
 }
 
 .col {
@@ -15,7 +16,6 @@
   display: flex !important;
   flex-direction: row !important;
   flex-grow: 1;
-  gap: 2rem;
 }
 
 input {
@@ -68,7 +68,7 @@ body {
   max-width: 1200px;
 }
 
-.login-form {
+.form {
   margin-top: 30%;
   background-color: rgba(20, 55, 94, .7);
   padding: 1.5rem 2rem;
@@ -86,11 +86,9 @@ body {
 }
 
 
-.form-layout div {
+.form-layout > div {
   display: flex;
   flex-direction: column;
-
-  
   
   max-width: 100%;
 }
@@ -206,8 +204,49 @@ label {
   width: 100%;
 }
 
-#register-button {
+#register_button {
   height: 2rem;
   width: 60%;
   align-self: center;
+}
+
+
+button:hover  {
+  transition: all .3s ease-in;
+  background-color: #14375e;
+}
+
+#workout_form {
+  width: 100%;
+  max-width: 50rem;
+  margin-top: 2rem;
+  gap: 1rem;
+}
+
+select {
+  border-radius: 1rem;
+  background-color: #212121;
+  color: rgb(250, 250, 250);
+  font-size: 1.4rem;
+  padding: .25rem 1rem;
+  margin: 0;
+}
+
+option {
+  border-radius: 1rem;
+  background-color: #212121;
+  color: rgb(250, 250, 250);
+  font-size: 1.4rem;
+  padding: .25rem 1rem;
+}
+
+.select_container {
+  background-color: #6f7681;
+  padding: .25rem 1rem;
+  border-radius: 2rem;
+}
+
+#form-error {
+  color: red;
+  margin-top: .25rem;
 }

@@ -1,11 +1,12 @@
 from django.shortcuts import render
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse
 from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse
 from .forms import LoginForm, RegistrationForm
 from .utils import read_registration, create_user, update_user_attrs, send_email_confirmation
 from django.core.exceptions import ValidationError
 from django.db import IntegrityError
+import json
 
 # Create your views here.
 def login_view(request):
@@ -41,14 +42,14 @@ def logout_view(request):
 
 def registration(request):
     # Check for form data
-    if request.method=="POST":    
+    if request.method=="POST":  
         try:
             # Read data into contact info and physical attributes
-            form = RegistrationForm(request.POST)
-            user_contact, user_attrs = read_registration(form)
+            form = RegistrationForm(request.POST) 
+            user_contact, user_attrs = read_registration(form) 
         except ValidationError as error:
-            # If form isn't valid or password doesn't match, refresh registration page with error message.
-            render(request, "users/registration.html", {"form": RegistrationForm(), "message": error})
+            # If form isn't valid or password doesn't match, return error message.
+            return JsonResponse({"message": str(error)})
 
         # Attempt to create a new user, update their info and log in to main page. 
         try:
@@ -56,9 +57,10 @@ def registration(request):
             update_user_attrs(username=user.username, **user_attrs)
             send_email_confirmation(**user_contact)
             login(request, user)
-            return HttpResponseRedirect(reverse("index"))
+            return JsonResponse({"success":True})
         except IntegrityError:
-            render(request, "users/registration.html", {"form": RegistrationForm(), "message": "Username already taken."})
+            return JsonResponse({"message":"Username already taken."})
+            
 
     if request.user.is_authenticated:
         return HttpResponseRedirect(reverse("index"))

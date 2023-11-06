@@ -1,1 +1,60 @@
 {% extends "workout/layout.html" %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+<link rel="stylesheet" href="{% static 'workout/css/index.css' %}">
+{% endblock %}
+
+{% block body %}
+<form class="form-layout col" id="workout_form">
+  <div class="controls_container">
+    <div>
+      <div class="select_container">
+        <select name="routine">
+          <option>Routine Name</option>
+        </select>
+      </div>
+    </div>
+      
+    <div>
+      <button class="save_routine controls" value="save routine">Save Routine</button>
+    </div>
+      
+    <div>
+      <button class="delete_routine controls" value="delete routine">Delete Routine</button>
+    </div>
+  </div>
+
+  <div id="exercises">
+    <div id="placeholder">Please select an exercise routine or add an exercise to get started.</div>
+  </div>
+  {% include "workout/exercise.html" %}
+  <div class="controls_container">
+    <div>
+      <div class="select_container">
+        <select name="exercise">
+          <option>Low Bar Squat</option>
+          <option>High Bar Squat</option>
+          <option>Bench Press</option>
+          <option>Chin Up</option>
+          <option>Overhead Press</option>
+          <option>Deadlift</option>
+        </select>
+      </div>
+    </div>
+      
+    <div>
+      <button class="add_exercise controls" value="add exercise">Add Exercise</button>
+    </div>
+      
+    <div>
+      <button class="save_workout controls" value="save workout">Save Current Workout</button>
+    </div>
+  </div>
+</form>
+{% endblock %}
+
+{% block javascript %}
+  <script type="text/javascript" src="{% static 'workout/js/index.js' %}"></script>
+{% endblock %}

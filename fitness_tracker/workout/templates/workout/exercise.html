@@ -1,0 +1,21 @@
+<div class="exercise_container">
+  <div class="exercise_name row">
+    <div>
+      Test - Delete in exercise.html {{ exercise }}
+    </div>
+    <div>
+      <button class="delete delete_exercise">
+        <span class="material-symbols-outlined delete delete_exercise">
+          delete
+        </span>
+      </button>
+    </div>
+  </div>
+  <hr class="visible">
+  <div class="sets">
+    {% include 'workout/set.html' %}
+  </div>
+  <div>
+    <button class="add_set controls">Add Set</button>
+  </div>
+</div>
