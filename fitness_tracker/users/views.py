@@ -46,7 +46,8 @@ def registration(request):
         try:
             # Read data into contact info and physical attributes
             form = RegistrationForm(request.POST) 
-            user_contact, user_attrs = read_registration(form) 
+            user_contact, user_attrs = read_registration(form)
+            
         except ValidationError as error:
             # If form isn't valid or password doesn't match, return error message.
             return JsonResponse({"message": str(error)})

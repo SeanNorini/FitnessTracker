@@ -8,38 +8,38 @@
 
 {% block body %}
 <form class="form-layout col" id="workout_form">
+  {% csrf_token %}
   <div class="controls_container">
     <div>
       <div class="select_container">
-        <select name="routine">
-          <option>Routine Name</option>
+        <select class="workout">
+          <option value="Custom" >Custom Workout</option>
+          {% for workout in workouts %}
+            <option value="{{ workout.name }}">{{ workout.name }}</option>
+          {% endfor %}
         </select>
       </div>
     </div>
       
     <div>
-      <button class="save_routine controls" value="save routine">Save Routine</button>
+      <button class="edit_workouts controls">Edit Workouts</button>
     </div>
       
     <div>
-      <button class="delete_routine controls" value="delete routine">Delete Routine</button>
+      <button class="edit_routines controls">Edit Routines</button>
     </div>
   </div>
 
   <div id="exercises">
     <div id="placeholder">Please select an exercise routine or add an exercise to get started.</div>
   </div>
-  {% include "workout/exercise.html" %}
   <div class="controls_container">
     <div>
       <div class="select_container">
-        <select name="exercise">
-          <option>Low Bar Squat</option>
-          <option>High Bar Squat</option>
-          <option>Bench Press</option>
-          <option>Chin Up</option>
-          <option>Overhead Press</option>
-          <option>Deadlift</option>
+        <select class="exercise">
+          {% for exercise in exercises %}
+            <option>{{ exercise.name }}</option>
+          {% endfor %}
         </select>
       </div>
     </div>
@@ -49,7 +49,7 @@
     </div>
       
     <div>
-      <button class="save_workout controls" value="save workout">Save Current Workout</button>
+      <button class="save_workout controls" value="save workout">Save Workout Session</button>
     </div>
   </div>
 </form>

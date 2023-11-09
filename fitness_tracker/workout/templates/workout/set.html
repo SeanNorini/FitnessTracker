@@ -1,10 +1,10 @@
 <div class="set">
   <div class="set_number">
-  Set 1:
+  Set {{ i|add:1 }}:
   </div>
   <div>
     <div>
-    <input type="number" size="4" step=".5">
+    <input type="number" class="weight" size="4" step=".5" >
     </div>
     <div>
     Lbs.
@@ -12,7 +12,7 @@
   </div>
   <div>
     <div>
-    <input type="number" size="2">
+    <input type="number" class="reps" size="2">
     </div>
     <div>
     Reps
@@ -25,5 +25,4 @@
       </span>
     </button>
   </div>
-
 </div>

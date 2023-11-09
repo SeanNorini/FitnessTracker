@@ -12,9 +12,8 @@ document.getElementById("registration_form").addEventListener("submit", (e) =>{
     const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
     formData.append('csrfmiddlewaretoken', csrftoken)
 
-    const errorOutput = document.querySelector('#form-error')
-
     // Send form, redirect to index on success otherwise display error.
+    const errorOutput = document.querySelector('#form-error')
     fetch('./registration', {
         method: 'POST',
         body: formData

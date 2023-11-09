@@ -36,8 +36,8 @@ def create_user(**user_contact) -> User:
     return user
 
 def update_user_attrs(username, **user_attrs) -> None:
-    user_attrs_obj = UserAttributes()
-    user_attrs_obj.update_attrs(username, user_attrs["height"], user_attrs["weight"], user_attrs["age"])
+    user = User.objects.get(username=username)
+    user_attrs_obj = UserAttributes(user=user, **user_attrs)
     user_attrs_obj.save()
 
 def send_email_confirmation(**user_info) -> None:
