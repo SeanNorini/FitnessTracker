@@ -38,7 +38,6 @@ ALLOWED_HOSTS = ['.vercel.app', '127.0.0.1']
 INSTALLED_APPS = [
     "users",
     "workout",
-    "mail_templated",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -75,7 +74,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = "fitness_tracker.wsgi.application"
+WSGI_APPLICATION = "fitness_tracker.wsgi.app"
 
 
 # Database
