@@ -44,6 +44,7 @@ class UserTests(StaticLiveServerTestCase):
         self.selenium.find_element(By.NAME, "height").send_keys("75")
         self.selenium.find_element(By.NAME, "age").send_keys("28")
         self.selenium.find_element(By.NAME, "register").click()
+        time.sleep(1)
         
 
     def test_login(self):
@@ -65,7 +66,7 @@ class UserTests(StaticLiveServerTestCase):
         self.admin_login()
         self.selenium.find_element(By.ID, "logout").click()
         url = self.selenium.current_url
-        assert url == f"{self.live_server_url}/users/login"
+        assert url == f"{self.live_server_url}/users/login?next=/"
 
     def test_redirect(self):
         """
@@ -74,7 +75,7 @@ class UserTests(StaticLiveServerTestCase):
         """
         self.selenium.get(f"{self.live_server_url}")
         url = self.selenium.current_url
-        assert url == f"{self.live_server_url}/users/login"
+        assert url == f"{self.live_server_url}/users/login?next=/"
 
     def test_registration(self):
         """

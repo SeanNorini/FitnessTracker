@@ -1,6 +1,6 @@
 from .forms import RegistrationForm
 from django.db import IntegrityError
-from .models import User, UserAttributes
+from .models import User
 from django.core.exceptions import ValidationError
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
@@ -36,9 +36,7 @@ def create_user(**user_contact) -> User:
     return user
 
 def update_user_attrs(username, **user_attrs) -> None:
-    user_attrs_obj = UserAttributes()
-    user_attrs_obj.update_attrs(username, user_attrs["height"], user_attrs["weight"], user_attrs["age"])
-    user_attrs_obj.save()
+    pass
 
 def send_email_confirmation(**user_info) -> None:
    

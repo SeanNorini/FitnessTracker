@@ -2,12 +2,12 @@
 {% load static %}
 
 {% block form %} 
-  <div class="login-form">
+  <div class="form">
   {% if message %}
     {{ message }}
   {% endif %}
-    <h1 id="login-header">Register</h1>
-    <form class="form-layout" action="{% url 'registration' %}" method="POST">
+    <h1 id="header">Register</h1>
+    <form class="form-layout" id="registration_form" action="{% url 'registration' %}" method="POST">
       {% csrf_token %}
       <div class="form-layout username-registration">
         {{ form.username.label_tag }}
@@ -57,8 +57,10 @@
       </div>
       <hr>
       <div class="form-submit">
-        <button id="register-button" name="register" type="submit">Complete Registration</button>
+        <button id="register_button" name="register" type="submit">Complete Registration</button>
       </div>
     </form>
+    <div id="form-error"></div>
   </div>
+  <script type="text/javascript" src="{% static 'users/js/registration.js' %}"></script>
 {% endblock %}

@@ -1,5 +1,5 @@
 from django import forms
-from django.core.validators import MaxLengthValidator, MaxValueValidator
+
 
 class LoginForm(forms.Form):
     username = forms.CharField(widget=forms.TextInput(attrs={"id":"username", "name":"username", "label":"username",

@@ -84,7 +84,7 @@ WSGI_APPLICATION = "fitness_tracker.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": os.environ["DB_ENGINE"],
-        "NAME": os.path.join(BASE_DIR, os.environ["DB_NAME"]),
+        "NAME": os.environ["DB_NAME"],
         "PORT": os.environ["DB_PORT"], 
         "HOST": os.environ["DB_HOST"], 
         "USER": os.environ["DB_USER"], 
@@ -152,3 +152,5 @@ EMAIL_HOST_PASSWORD = os.environ['EMAIL_HOST_PASSWORD']
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
+
+LOGIN_URL = "users/login"
