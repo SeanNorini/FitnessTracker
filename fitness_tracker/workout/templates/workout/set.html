@@ -1,10 +1,10 @@
 <div class="set">
   <div class="set_number">
-  Set {{ i|add:1 }}:
+  Set {{ set.number }}:
   </div>
   <div>
     <div>
-    <input type="number" class="weight" size="4" step=".5" >
+    <input type="number" class="weight" step=".5" placeholder="{{ set.weight }}">
     </div>
     <div>
     Lbs.
@@ -12,7 +12,7 @@
   </div>
   <div>
     <div>
-    <input type="number" class="reps" size="2">
+    <input type="number" class="reps" placeholder="{{ set.reps }}">
     </div>
     <div>
     Reps

@@ -1,6 +1,6 @@
 const controls = document.querySelector("#workout_form");
 
-controls.addEventListener("click", function(e) {
+controls.addEventListener("click", (e) => {
     e.preventDefault();
 
     if (e.target.classList.contains("delete_exercise")){
@@ -48,7 +48,7 @@ controls.addEventListener("click", function(e) {
         // Check for workout to save
         const exercises = document.querySelectorAll(".exercise_name");
         if (exercises.length == 0){
-            set_message("You must add at least one exercise before saving a workout.");
+            set_message("You must add at least one exercise before saving a workout session.");
             return
         }
 
@@ -101,12 +101,35 @@ function update_set_number(container) {
     }
 
 function set_message(message) {
-    const placeholder = document.createElement("div");
+    if (!document.querySelector("#placeholder")){
+        const placeholder = document.createElement("div")
+        placeholder.id = "placeholder";
+        placeholder.style.minHeight = "15rem";
+        placeholder.style.display = "flex";
+        placeholder.style.alignItems = "center";
+        placeholder.style.justifyContent ="center";
+        document.querySelector("#exercises").prepend(placeholder);
+    }
+
     placeholder.innerText = message;
-    placeholder.id = "placeholder";
-    placeholder.style.minHeight = "15rem";
-    placeholder.style.display = "flex";
-    placeholder.style.alignItems = "center";
-    placeholder.style.justifyContent ="center";
-    document.querySelector("#exercises").prepend(placeholder);
 }
+
+controls.addEventListener("change", (e) => {
+    if (e.target.classList.contains("workout")){
+        workout = document.querySelector(".workout").value;
+        if (workout == "custom"){
+            return
+        }
+
+        const confirm = window.confirm("This will erase the current workout session, are you sure?")
+
+        if (confirm){
+            fetch("select_workout/" + workout, {method:"GET"})
+            .then(response => response.text())
+            .then(workoutHTML => {
+                const exercises = document.querySelector("#exercises");
+                exercises.innerHTML = workoutHTML;
+            });
+        }
+    }
+});

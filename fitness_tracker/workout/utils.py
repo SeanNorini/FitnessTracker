@@ -23,7 +23,7 @@ def save_current_workout(exercise_logs: list) -> Workout:
 def delete_record(obj: object) -> None:
     obj.delete()
 
-def read_workout(user, workout_form) -> [WorkoutLog, [ExerciseSet]]:
+def read_workout(user, workout_form) -> WorkoutLog:
     workout = WorkoutLog()
     workout.user = user
     workout.name = workout_form.cleaned_data["name"]
@@ -32,16 +32,23 @@ def read_workout(user, workout_form) -> [WorkoutLog, [ExerciseSet]]:
     weights = workout_form.cleaned_data["weights"].split(",")
     reps = workout_form.cleaned_data["reps"].split(",")
     
-    sets = []
-    for i in range(len(weights)):
+    set_logs = {}
+    for i, exercise in enumerate(exercises):
+        if exercise not in set_logs:
+            set_number = 1
+            set_logs[exercise] = {"sets":[]}
+
         if weights[i] == '':
             weights[i] = 0
         if reps[i] == '':
             reps[i] = 0
-        exercise = Exercise.objects.get(name=exercises[i])
         
-        new_set = ExerciseSet(workout_log=workout, exercise=exercise, weight=weights[i], reps=reps[i])
-        sets.append(new_set)
+        new_set = {"number":set_number, "weight":weights[i], "reps":reps[i]}
+        set_logs[exercise]["sets"].append(new_set)
+
+        set_number += 1
     
-    return workout, sets
+    workout.set_logs = set_logs
+
+    return workout
     

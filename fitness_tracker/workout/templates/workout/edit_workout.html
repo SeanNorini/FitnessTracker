@@ -1,0 +1,49 @@
+<div class="controls_container">
+    <div>
+      <div class="select_container">
+        <select class="workout">
+          <option value="custom">Custom Workout</option>
+          {% for workout in workouts %}
+            <option value="{{ workout.name }}">{{ workout.name }}</option>
+          {% endfor %}
+        </select>
+      </div>
+    </div>
+      
+    <div class="row edit_workouts_container">
+      <button class="edit_workouts controls">Edit Workouts</button>
+      <span class="material-symbols-outlined workout_help">
+        help
+      </span>
+    </div>
+      
+    <div class="row edit_routines_container">
+      <button class="edit_routines controls">Edit Routines</button>
+      <span class="material-symbols-outlined routine_help">
+        help
+      </span>
+    </div>
+  </div>
+
+  <div id="exercises">
+    <div id="placeholder">Please select a workout or add an exercise to get started.</div>
+  </div>
+  <div class="controls_container">
+    <div>
+      <div class="select_container">
+        <select class="exercise">
+          {% for exercise in exercises %}
+            <option>{{ exercise.name }}</option>
+          {% endfor %}
+        </select>
+      </div>
+    </div>
+      
+    <div>
+      <button class="add_exercise controls" value="add exercise">Add Exercise</button>
+    </div>
+      
+    <div>
+      <button class="save_workout controls" value="save workout">Save Workout Session</button>
+    </div>
+  </div>

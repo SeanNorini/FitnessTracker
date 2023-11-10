@@ -1,3 +1,4 @@
+{% load custom_filters %}
 <div class="exercise_container">
   <div class="exercise_name row">
     <div id="exercise_name">
@@ -13,8 +14,10 @@
   </div>
   <hr class="visible">
   <div class="sets">
-    {% for i in default_sets %}
-      {% include 'workout/set.html' %}
+    {% for sets in sets.values %}
+      {% for set in sets %}
+        {% include 'workout/set.html' %}
+      {% endfor %}
     {% endfor %}
   </div>
   <hr class="visible">
