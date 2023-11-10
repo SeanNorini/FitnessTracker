@@ -92,6 +92,10 @@ controls.addEventListener("click", (e) => {
         });
     }
 
+    if (e.target.classList.contains("edit_workout")){
+      fetch("edit_workout/", {method:"GET"})
+    }
+
 });
 
 function update_set_number(container) {
