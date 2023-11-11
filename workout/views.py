@@ -25,7 +25,7 @@ def index(request):
 @login_required
 def add_exercise(request, exercise):
     if request.method == "GET":
-        exercise = Exercise.objects.get(name=exercise)
+        exercise = Exercise.objects.get(name=exercise.replace('%20', ' '))
         sets = exercise.config
         return render(request, "workout/exercise.html", {"exercise": exercise.name, "sets": sets})
     else:
@@ -51,7 +51,7 @@ def save_workout(request):
     
 @login_required
 def select_workout(request, workout_name):
-    workout = Workout.objects.get(name=workout_name)
+    workout = Workout.objects.get(name=workout_name.replace('%20', ' '))
     exercises = workout.config
     
     return render(request, "workout/workout.html", {"exercises": exercises})
