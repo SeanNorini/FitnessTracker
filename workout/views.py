@@ -17,7 +17,7 @@ def index(request):
     exercises = Exercise.objects.all()
     workouts = Workout.objects.all()
     #user.get_module_list()
-    modules = ["Workout", "Cardio", "Log", "Stats", "Settings"]
+    modules = ["workout", "cardio", "log", "stats", "settings"]
 
     return render(request, "workout/index.html", {"modules":modules,
                                                   "exercises": exercises, "workouts": workouts})
