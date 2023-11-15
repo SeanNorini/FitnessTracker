@@ -10,22 +10,23 @@ import os
 load_dotenv()
 
 def read_registration(form):
-    user_contact = {}
-    user_attrs = {}
+    user_info = {}
+    user_config = {}
     if form.is_valid():
-          user_contact["username"] = form.cleaned_data["username"]
-          user_contact["first_name"] = form.cleaned_data["first_name"] if form.cleaned_data["first_name"] else "Jane"
-          user_contact["last_name"] = form.cleaned_data["last_name"] if form.cleaned_data["last_name"] else "Doe"
-          user_contact["password"] = form.cleaned_data["password"]
-          user_contact["email"] = form.cleaned_data["email"]
-          user_attrs["height"] = form.cleaned_data["height"] if form.cleaned_data["height"] else 70
-          user_attrs["weight"] = form.cleaned_data["weight"] if form.cleaned_data["weight"] else 180
-          user_attrs["age"] = form.cleaned_data["age"] if form.cleaned_data["age"] else 30
+          user_info["username"] = form.cleaned_data["username"]
+          user_info["first_name"] = form.cleaned_data["first_name"] if form.cleaned_data["first_name"] else "Jane"
+          user_info["last_name"] = form.cleaned_data["last_name"] if form.cleaned_data["last_name"] else "Doe"
+          user_info["password"] = form.cleaned_data["password"]
+          user_info["email"] = form.cleaned_data["email"]
+          user_config["gender"] = form.cleaned_data["gender"]
+          user_config["height"] = form.cleaned_data["height"] if form.cleaned_data["height"] else 70
+          user_config["weight"] = form.cleaned_data["weight"] if form.cleaned_data["weight"] else 180
+          user_config["age"] = form.cleaned_data["age"] if form.cleaned_data["age"] else 30
     else:
         raise ValidationError("Invalid form data.")
 
-    if user_contact["password"] == form.cleaned_data["confirm_password"]:
-        return user_contact, user_attrs
+    if user_info["password"] == form.cleaned_data["confirm_password"]:
+        return user_info, user_config
     else:
         raise ValidationError("Passwords did not match.")
 

@@ -15,9 +15,9 @@ controls.addEventListener("click", (e) => {
         
         fetch("add_set", {method: "GET"})
         .then(response => response.text())
-        .then( set_template => {
+        .then( template => {
             const setRow = document.createElement("template");
-            setRow.innerHTML = set_template.trim();
+            setRow.innerHTML = template.trim();
             const container = e.target.closest(".exercise_container");
             container.querySelector(".sets").appendChild(setRow.content.firstChild);
             update_set_number(container);
@@ -30,9 +30,9 @@ controls.addEventListener("click", (e) => {
 
         fetch(("add_exercise/") + exercise, {method: "GET"})
         .then(response => response.text())
-        .then(exercise_template => {
+        .then(template => {
             const exercise = document.createElement("template");
-            exercise.innerHTML = exercise_template.trim();    
+            exercise.innerHTML = template.trim();    
             exercises.appendChild(exercise.content.firstChild);
         });
 
@@ -92,8 +92,18 @@ controls.addEventListener("click", (e) => {
         });
     }
 
-    if (e.target.classList.contains("edit_workout")){
-      fetch("edit_workout/", {method:"GET"})
+    if (e.target.classList.contains("workout_settings")){
+      fetch("workout_settings", {method:"GET"})
+      .then(response => response.text())
+      .then(template => {
+          const container = document.querySelector("#workout_form");
+          const token = container.querySelector("[name=csrfmiddlewaretoken]");
+          container.innerHTML = "";
+          container.appendChild(token);
+          const editForm = document.createElement("template");
+          editForm.innerHTML = template.trim();    
+          container.appendChild(editForm.content);
+      });
     }
 
 });

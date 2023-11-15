@@ -1,8 +1,8 @@
-document.getElementById("registration_form").addEventListener("submit", (e) =>{
+document.getElementById("settings_form").addEventListener("submit", (e) =>{
     e.preventDefault();
 
     // Pull data from form
-    const formElements = document.querySelector("#registration_form").querySelectorAll("input");
+    const formElements = document.querySelector("#settings_form").querySelectorAll("input");
     const formData = new FormData();
     formElements.forEach((element) => {
         formData.append(element.name, element.value);
@@ -18,7 +18,7 @@ document.getElementById("registration_form").addEventListener("submit", (e) =>{
 
     // Send form, redirect to index on success otherwise display error.
     const errorOutput = document.querySelector('#form-error')
-    fetch('./registration', {
+    fetch('./settings', {
         method: 'POST',
         body: formData
     })
@@ -35,7 +35,7 @@ document.getElementById("registration_form").addEventListener("submit", (e) =>{
     })
     .catch(error => {
         console.error('Error:', error);
-        errorOutput.innerText = "Sorry! There was an error submitting your registration. ";
+        errorOutput.innerText = "Sorry! There was an error updating your information. ";
     });   
 });
 

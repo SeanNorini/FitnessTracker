@@ -1,0 +1,35 @@
+#name {
+  align-items: end;
+  gap: 1rem;
+}
+
+#name div, #name input {
+  flex-grow: 1;
+  width: 100%;
+}
+
+#settings_form.form {
+  display: flex;
+  flex-direction: column;
+  margin: 2rem 0 0;
+  gap: 1rem;
+}
+
+#buttons {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: .5rem;
+}
+
+#buttons button {
+  max-width: 30%;
+  min-width: 10rem;
+}
+
+#id_gender label {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+}

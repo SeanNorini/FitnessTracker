@@ -57,6 +57,8 @@ def select_workout(request, workout_name):
     return render(request, "workout/workout.html", {"exercises": exercises})
 
 @login_required
-def edit_workout(request):
-    pass
+def workout_settings(request):
+    exercises = Exercise.objects.all()
+    workouts = Workout.objects.all()
+    return render(request, "workout/workout_settings.html", {"workouts": workouts, "exercises": exercises})
   
