@@ -1,0 +1,33 @@
+{% extends "users/form-wrapper.html" %}
+{% load static %}
+
+{% block head%}
+  <link ref="stylesheet" href="{% static 'users/css/login.css' %}">
+{% endblock %}
+
+{% block form %} 
+  <div class="form">
+    <h1 id="login-header">Log In</h1>
+    <form class="form-layout login" action="{% url 'login' %}" method="POST">
+      {% csrf_token %}
+      <div class="username">
+        {{ form.username.label }}
+        {{ form.username }}
+      </div>
+      <div class="password">
+        {{ form.password.label }}
+        {{ form.password }}
+      </div>
+      <div class="remember_me row">
+        {{ form.remember_me }}
+        Remember Me
+      </div>
+      <button class="button" name="login" type="submit">Login</button>
+      <div class="bold_link row">
+        Need an account?
+        <a href="{% url 'registration' %}" data-text="Sign Up!">Sign Up!</a>
+      </div>
+    </form>
+  </div>
+{% endblock %}
+  
