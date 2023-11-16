@@ -1,4 +1,6 @@
 {% load static %}
-{% for exercise, sets in exercises.items %}
-  {% include "workout/exercise.html" %}
+{% for exercises in workout %}
+  {% for exercise, sets in exercises.items %}
+    {% include "workout/exercise.html" %}
+  {% endfor %}
 {% endfor %}

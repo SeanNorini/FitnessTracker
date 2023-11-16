@@ -14,51 +14,69 @@ load_dotenv()
 # Create your views here.
 @login_required
 def index(request):
-    exercises = Exercise.objects.all()
-    workouts = Workout.objects.all()
+    custom_exercises = list(CustomExercise.objects.filter(user=request.user).values_list("name", flat=True))
+    custom_workouts = list(CustomWorkout.objects.filter(user=request.user).values_list("name", flat=True))
+    custom_exercises.extend(list(Exercise.objects.exclude(name__in=custom_exercises).values_list("name", flat=True)))
+    custom_workouts.extend(list(Workout.objects.exclude(name__in=custom_workouts).values_list("name", flat=True)))
+
+
     #user.get_module_list()
     modules = ["workout", "cardio", "log", "stats", "settings"]
 
     return render(request, "workout/index.html", {"modules":modules,
-                                                  "exercises": exercises, "workouts": workouts})
+                                                  "exercises": custom_exercises, "workouts": custom_workouts})
 
 @login_required
 def add_exercise(request, exercise):
-    if request.method == "GET":
-        exercise = Exercise.objects.get(name=exercise.replace('%20', ' '))
-        sets = exercise.config
-        return render(request, "workout/exercise.html", {"exercise": exercise.name, "sets": sets})
+    if (CustomExercise.objects.filter(user=request.user).exists()):
+        exercise = CustomExercise.objects.get(name=exercise.replace('%20', ' '))    
     else:
-        HttpResponseRedirect(reverse("index"))
+        exercise = Exercise.objects.get(name=exercise.replace('%20', ' '))
+    sets = exercise.sets
+    return render(request, "workout/exercise.html", {"exercise": exercise.name, "sets": sets})
+
 
 @login_required
 def add_set(request):
-    if request.method == "GET":
-        return render(request, "workout/set.html")
-    else:
-        HttpResponseRedirect(reverse("index"))
+    return render(request, "workout/set.html")
+    
     
 @login_required
-def save_workout(request):
+def save_workout_session(request):
     if request.method == "POST":
         workout_form = WorkoutForm(request.POST)
         if workout_form.is_valid():
-            workout_log = read_workout(request.user, workout_form)
+            workout_log = read_workout_session(request.user, workout_form)
             workout_log.save()
             
             return JsonResponse({"success":True})
         return JsonResponse({"error":"Invalid Form"})
     
 @login_required
-def select_workout(request, workout_name):
-    workout = Workout.objects.get(name=workout_name.replace('%20', ' '))
-    exercises = workout.config
+def save_workout(request):
+    if request.method == "POST":
+        workout_form = WorkoutForm(request.POST)
+        if workout_form.is_valid():
+            custom_workout = read_workout(request.user, workout_form)
+            custom_workout.save()
+            
+            return JsonResponse({"success":True})
+        return JsonResponse({"error":"Invalid Form"})
     
-    return render(request, "workout/workout.html", {"exercises": exercises})
+@login_required
+def select_workout(request, workout_name):
+    if CustomWorkout.objects.filter(user=request.user, name=workout_name):
+      workout = CustomWorkout.objects.get(name=workout_name)
+    else:
+      workout = Workout.objects.get(name=workout_name.replace('%20', ' '))
+    return render(request, "workout/workout.html", {"workout": workout.config["exercises"]})
 
 @login_required
-def workout_settings(request):
-    exercises = Exercise.objects.all()
-    workouts = Workout.objects.all()
-    return render(request, "workout/workout_settings.html", {"workouts": workouts, "exercises": exercises})
+def edit_workouts(request):
+    custom_exercises = list(CustomExercise.objects.filter(user=request.user).values_list("name", flat=True))
+    custom_workouts = list(CustomWorkout.objects.filter(user=request.user).values_list("name", flat=True))
+    custom_exercises.extend(list(Exercise.objects.exclude(name__in=custom_exercises).values_list("name", flat=True)))
+    custom_workouts.extend(list(Workout.objects.exclude(name__in=custom_workouts).values_list("name", flat=True)))
+
+    return render(request, "workout/edit_workouts.html", {"workouts": custom_workouts, "exercises": custom_exercises})
   

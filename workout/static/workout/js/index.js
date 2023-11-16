@@ -7,7 +7,7 @@ controls.addEventListener("click", (e) => {
         e.target.closest(".exercise_container").remove(); 
 
         if (!document.querySelector(".add_set")){
-            set_message("Please select an exercise routine or add an exercise to get started.");
+            set_message("Please select a workout or add an exercise to get started.");
         }
     } 
     
@@ -90,20 +90,6 @@ controls.addEventListener("click", (e) => {
                 set_message("Workout saved.");
             }
         });
-    }
-
-    if (e.target.classList.contains("workout_settings")){
-      fetch("workout_settings", {method:"GET"})
-      .then(response => response.text())
-      .then(template => {
-          const container = document.querySelector("#workout_form");
-          const token = container.querySelector("[name=csrfmiddlewaretoken]");
-          container.innerHTML = "";
-          container.appendChild(token);
-          const editForm = document.createElement("template");
-          editForm.innerHTML = template.trim();    
-          container.appendChild(editForm.content);
-      });
     }
 
 });

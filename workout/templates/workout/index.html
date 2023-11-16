@@ -7,10 +7,7 @@
 {% endblock %}
 
 {% block body %}
-<form class="form-layout col" id="workout_form">
-  {% csrf_token %}
   {% include "workout/workout_session.html" %}
-</form>
 {% endblock %}
 
 {% block javascript %}
